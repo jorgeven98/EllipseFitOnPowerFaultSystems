@@ -34,7 +34,36 @@ All three methods share coherent thresholds for direct comparison.
 ## Requirements
 
 - MATLAB R2020b or higher
-- No additional toolboxes required
+- No additional toolboxes required to run the classifiers: if the optional
+  [GA-FuL MATLAB Toolbox](https://github.com/ga-explorer/GA-FuL-MATLAB-Toolbox) is not on the path,
+  `ga_fault_classifier` automatically delegates to `ga_fault_classifier_pure`, a dependency-free
+  port whose labels are **identical to the GA-FuL implementation on all 3,696 windows** of the
+  paper's accuracy protocol (see `tests/test_pure_vs_gaful_parity.m`).
+- With GA-FuL installed (`gafulInit` on the path), the exact original implementation used for the
+  paper's results is executed instead.
+- Note: the exploratory `core/` + `processing/` chain additionally references a `ga3` class and is
+  not needed for the classification experiments.
+
+## Quick start
+
+From the repository root:
+
+```matlab
+smoke_test          % verifies the repo runs on your installation (no dependencies)
+```
+
+To reproduce the paper's accuracy table (Table: mean classification accuracy, GA/Clarke/PE3D,
+DG1/Pex, 4 window sizes):
+
+```matlab
+cd experiments
+compare_classifier_accuracy   % ~1 min; writes results/latex/table_accuracy_*.tex
+```
+
+The robustness suite of the TPWRD revision (decaying DC, capacitor-bank switching, ungrounded
+single-line-to-ground, negative-sequence injection) is in `experiments/robustness_suite_tpwrd.m`
+and `experiments/robustness_suite_tpwrd_v2.m`; the severity-estimator comparison is in
+`experiments/severity_estimator_r17.m`.
 
 ## Repository Structure
 

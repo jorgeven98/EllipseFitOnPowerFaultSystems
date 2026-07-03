@@ -22,7 +22,9 @@ function [center, axes, angle] = extractEllipseParameters(Q)
     centerX = center(1);
     centerY = center(2);
 
-    beta = centerX^2 + centerY^2 - (centerX^2 - centerY^2) * vn - 2 * centerX * centerY * vx - 2 * vp;
+    % Signo de los términos de centro corregido (rev. TPWRD 2026): con el signo
+    % negativo los ejes salían ~3x en elipses descentradas (inofensivo con centro=0).
+    beta = centerX^2 + centerY^2 + (centerX^2 - centerY^2) * vn + 2 * centerX * centerY * vx - 2 * vp;
     % if beta < 0
     %     beta= -beta;
     % end

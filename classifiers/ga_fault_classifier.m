@@ -6,11 +6,21 @@ function [fault_type, params] = ga_fault_classifier(V_abc, fs, f)
 % Input:
 %   V_abc: Matriz [N x 3] donde cada columna es una fase (Va, Vb, Vc)
 %   fs: Frecuencia de muestreo (Hz) [opcional, default: detectar automáticamente]
-%   f: Frecuencia del sistema (Hz) [opcional, default: 60 Hz]
+%   f: Frecuencia del sistema (Hz) [opcional, default: 50 Hz]
 %
 % Output:
 %   fault_type: String con el tipo de falta
 %   params: Estructura con parámetros de diagnóstico
+
+% Fallback sin dependencias: si GA-FuL no está instalado, delega en el port
+% MATLAB-puro verificado (paridad 3696/3696 ventanas contra GA-FuL,
+% ver tests/test_pure_vs_gaful_parity.m).
+if isempty(which('gafulInit'))
+    if nargin < 3, f = []; end
+    if nargin < 2, fs = []; end
+    [fault_type, params] = ga_fault_classifier_pure(V_abc, fs, f);
+    return;
+end
 
 persistent vga;
 if isempty(vga)

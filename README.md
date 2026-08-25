@@ -83,6 +83,18 @@ Simulink simulation files for all supported fault types under a grid-connected s
 
 Each file contains three-phase voltage waveforms sampled at **4000 Hz**.
 
+### Fault intensity sweep (`data/fault_intensity_sweep/`)
+
+One `.mat` file per fault type (`I_A-B.mat`, `I_A-G.mat`, ...), each with a 100-point sweep of fault intensity used to derive the ellipse/bivector parameters reported in the paper (Table I: semi-axes, rotation angle, and bivector coefficients per fault type and severity).
+
+| Variable | Description |
+|---|---|
+| `signals` | `[3 x N x 100]` three-phase voltage samples, one slice per intensity step |
+| `fault_intensity` | `[1 x 100]` fault intensity values (p.u.) matching the third dimension of `signals` |
+| `time` | `[1 x N]` time vector |
+| `fault_type` | Fault type string (e.g. `"A-B"`) |
+| `f`, `fs` | System frequency and sampling frequency (Hz) |
+
 > **Note:** Laboratory hardware measurement files (~2 GB) are not included in this repository. Contact the authors for access.
 
 ## Quick Start

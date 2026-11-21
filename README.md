@@ -15,9 +15,9 @@ Each period of a three-phase voltage waveform traces an ellipse in 3D space. The
 
 **Methods implemented:**
 
-1. **GA (Geometric Algebra)** — Extracts the instantaneous voltage plane via bivectors, projects onto that plane, and fits an ellipse using Geometric Algebra for Conics (GAC). Classifies faults from roundness, magnitude, and orientation angle.
-2. **Clarke** — Transforms to α-β-0 coordinates and applies PCA to extract ellipse parameters for classification.
-3. **PE3D** — Characterizes the 3D polarization ellipse via Stokes parameters (following Alam et al., 2020).
+1. **GA (Geometric Algebra)**: Extracts the instantaneous voltage plane via bivectors, projects onto that plane, and fits an ellipse using Geometric Algebra for Conics (GAC). Classifies faults from roundness, magnitude, and orientation angle.
+2. **Clarke**: Transforms to α-β-0 coordinates and applies PCA to extract ellipse parameters for classification.
+3. **PE3D**: Characterizes the 3D polarization ellipse via Stokes parameters (following Alam et al., 2020).
 
 All three methods share coherent thresholds for direct comparison.
 
@@ -65,6 +65,10 @@ single-line-to-ground, negative-sequence injection) is in `experiments/robustnes
 and `experiments/robustness_suite_tpwrd_v2.m`; the severity-estimator comparison is in
 `experiments/severity_estimator_r17.m`.
 
+The scripts of the second-round revision (zero-sequence gate, robustness suite, EMT campaign,
+sector-law validity region, timing) are in [`revision_r2/`](revision_r2/README.md), with a table
+that maps each table and figure of the manuscript to its script.
+
 ## Repository Structure
 
 ```
@@ -86,8 +90,8 @@ data/              - Simulation data (.mat files) for all 11 fault types
 | `ga_fault_classifier.m` | GA | Geometric Algebra with bivectors and GAC ellipse fitting |
 | `clarke_fault_classifier.m` | Clarke | Clarke transform + PCA ellipse extraction |
 | `pe3d_fault_classifier.m` | PE3D | 3D Polarization Ellipse via Stokes parameters |
-| `fit_ellipse_gac.m` | — | GAC ellipse fitting wrapper |
-| `fit_ellipse_gac_improved.m` | — | Enhanced fitting with degenerate case handling |
+| `fit_ellipse_gac.m` | | GAC ellipse fitting wrapper |
+| `fit_ellipse_gac_improved.m` | | Enhanced fitting with degenerate case handling |
 
 ### Core Functions (`core/`)
 
@@ -183,13 +187,13 @@ result = pe3d_fault_classifier(V_abc, fs, f)
 ```
 
 **Inputs:**
-- `V_abc` — `[N×3]` matrix of three-phase voltages (columns: Va, Vb, Vc)
-- `fs` — Sampling frequency in Hz (e.g., `4000`)
-- `f` — System frequency in Hz (e.g., `50`)
+- `V_abc`: `[N×3]` matrix of three-phase voltages (columns: Va, Vb, Vc)
+- `fs`: Sampling frequency in Hz (e.g., `4000`)
+- `f`: System frequency in Hz (e.g., `50`)
 
 **Output:** Structure with fields:
-- `result.fault_type` — Detected fault type string (`'Normal'`, `'AB'`, `'AG'`, etc.)
-- `result.params` — Diagnostic parameters (roundness, magnitude, angle, etc.)
+- `result.fault_type`: Detected fault type string (`'Normal'`, `'AB'`, `'AG'`, etc.)
+- `result.params`: Diagnostic parameters (roundness, magnitude, angle, etc.)
 
 ## System Parameters
 
@@ -204,9 +208,9 @@ result = pe3d_fault_classifier(V_abc, fs, f)
 
 | Parameter | Threshold |
 |-----------|-----------|
-| Circularity — Normal/ABCG boundary | 0.99 |
-| Magnitude — fault detection | 0.90 pu |
-| Degeneracy — line-to-line detection | 0.05 |
+| Circularity, Normal/ABCG boundary | 0.99 |
+| Magnitude, fault detection | 0.90 pu |
+| Degeneracy, line-to-line detection | 0.05 |
 | L-L angle margin | ±30° |
 
 ## Validation

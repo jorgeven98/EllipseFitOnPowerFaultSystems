@@ -99,9 +99,13 @@ for p = {'fase', 'ganancia', 'ruido', 'combo'}
             strcmp(TE.resultado{r}, A.resultado{m}) && strcmp(TE.clase{r}, A.clase{m}) && isequaln(round(TE.decl_ms(r), 6), round(A.decl_ms(m), 6)) && TE.n_decl_prefalta(r) == A.n_decl_prefalta(m)}; %#ok<AGROW>
     end
 end
+if isempty(cmp)
+    fprintf('AVISO: no estan los resultados de T52 en %s; se omite la comparacion.\n', T52);
+else
 TC = cell2table(cmp, 'VariableNames', {'parte','condicion','rep','archivo','terminal','resultado_final','resultado_T52','clase_final','clase_T52','decl_ms_final','decl_ms_T52','prefalta_final','prefalta_T52','igual'});
 writetable(TC, fullfile(out_dir, 'instr_vs_T52.csv'));
 fprintf('Comparacion con T52 G5_005: %d eventos emparejados, %d identicos (resultado, clase, latencia y falsas en prefalta)\n', height(TC), nnz(TC.igual));
+end
 fprintf('Huella al terminar: %s\nFIN r2_final_instrumentacion (%.0f s)\n', r2_t20_md5(), toc);
 end
 

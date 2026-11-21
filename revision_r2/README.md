@@ -51,11 +51,12 @@ Outputs are written to `revision_r2/_revision_TPWRD/ronda2/resultados/` (ignored
 | Table S7, earlier and revised zero-sequence gate | campaign that selected the gate, not included (see below); `r2_final_instrumentacion.m` repeats part of its grid with the final settings | public simulation records |
 | Table S8, adaptive roundness gate | `r2_gate_sensitivity.m` | public simulation records; laboratory records |
 | Eq. (S1) and Table S9, cross-country faults | `r2_t73_crosscountry_final.m`; `r2_t73_xc.m` for the two EMT cases | synthetic; EMT cases |
-| Table S10, data sets not used for the design | `r2_final_lab.m`, `r2_t20_run_all.m` | laboratory records; SINTEF data set |
+| Table S10, data sets not used for the design | `r2_final_lab.m` (converter-terminal and grid-side voltages), `r2_t20_run_all.m` | laboratory records; SINTEF data set |
+| Order of the phases in the laboratory channels (Section S8) | `r2_lab_phase_order.m` | laboratory records |
 | Tables S11 and S12, fault resistance and inception angle | `r2_final_emt.m`, `r2_final_emt_resumen.m` | EMT cases |
 | Table S13 and Fig. S1, inception transient | `r2_transient_damping.m`, `r2_transient_table.py` | EMT cases (85 cases of the sweeps) |
 
-`reference_results/S2_final.csv` holds the 170 events of the fault-resistance and inception-angle sweeps as reported in the paper (outcome, declared class and latency per event), and `reference_results/transient_damping.csv` the transient figures of the same events.
+`reference_results/S2_final.csv` holds the 170 events of the fault-resistance and inception-angle sweeps as reported in the paper (outcome, declared class and latency per event), and `reference_results/transient_damping.csv` the transient figures of the same events. `reference_results/lab_phase_order.csv` holds the figures behind the phase order of the laboratory channels.
 
 ## Check of reproducibility
 

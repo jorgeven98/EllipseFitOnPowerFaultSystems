@@ -327,7 +327,13 @@ end
 %% ======================================================================
 function C = cifras(T, N, Dg, Vr, T0, S0, RR, texfile)
 % Una fila por cifra. csv_origen es relativo a ronda2. La linea se busca en main_rev2.tex.
-L = regexp(fileread(texfile), '\r?\n', 'split'); SC = 'experiments/r2_final_lab.m'; B = 'resultados/T90/lab/';
+if isfile(texfile)
+    L = regexp(fileread(texfile), '\r?\n', 'split');
+else   % sin el manuscrito no se busca la linea de cada cifra
+    L = repmat({''}, 1, 1640);
+    fprintf('AVISO: no esta %s; cifras_lab.csv se escribe sin la linea del manuscrito.\n', texfile);
+end
+SC = 'experiments/r2_final_lab.m'; B = 'resultados/T90/lab/';
 rows = {};
     function add(id, desc, valor, unidad, csv, antiguo, patron, motivo, cambia)
         ln = '';

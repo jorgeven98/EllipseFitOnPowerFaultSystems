@@ -150,7 +150,7 @@ One `.mat` file per fault type (`I_A-B.mat`, `I_A-G.mat`, ...), each with a 100-
 | `fault_type` | Fault type string (e.g. `"A-B"`) |
 | `f`, `fs` | System frequency and sampling frequency (Hz) |
 
-> **Note:** Laboratory hardware measurement files (~2 GB) are not included in this repository. Contact the authors for access.
+> **Note:** The laboratory records (39 files, about 2 GB) are not in this repository. They are archived at Zenodo: https://doi.org/10.5281/zenodo.24424837
 
 ## Usage examples
 

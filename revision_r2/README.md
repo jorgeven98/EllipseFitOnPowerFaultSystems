@@ -18,7 +18,7 @@ addpath('revision_r2/experiments')
 r2_final_run_all('bloques', {'nominal', 'robustez', 'instrumentacion', 'degenerada', 'tiempos'})
 ```
 
-Outputs are written to `revision_r2/_revision_TPWRD/ronda2/resultados/` (ignored by git). `r2_final_run_all` without arguments runs every block; `emt`, `lab`, `lab_fig`, `sintef` and `puerta` need non-public data (see below) and stop with an error without it.
+Outputs are written to `revision_r2/_revision_TPWRD/ronda2/resultados/` (ignored by git). `r2_final_run_all` without arguments runs every block. The block `lab` needs the laboratory records (see below). The blocks `emt`, `sintef`, `lab_fig` and `puerta` need data or intermediate files that are not in the repository and stop with an error without them.
 
 ## Where each result comes from
 
@@ -31,7 +31,7 @@ Outputs are written to `revision_r2/_revision_TPWRD/ronda2/resultados/` (ignored
 | Fig. 5 (A-B trajectory, R and RL cases) | `r2_fig_rrl.m` | public simulation records |
 | Line-to-line sector law and validity region, Fig. 9(a) curves | `r2_sector_analytic.m`, `r2_sector_seqsolve.m`, `r2_ground_rf_laws.m` | analytical and synthetic |
 | EMT campaign (Table III, Fig. 9) | `r2_emt_campaign.m`, `r2_emt_run_case.m`, `r2_final_emt.m` | Simulink model, available from the authors on request |
-| Laboratory results and Fig. 7 | `r2_final_lab.m`, `r2_final_lab_fig.m` | laboratory records, available from the authors on request |
+| Laboratory results and Fig. 7 | `r2_final_lab.m`, `r2_final_lab_fig.m` | laboratory records ([Zenodo](https://doi.org/10.5281/zenodo.24424837)) |
 | SINTEF data set | `r2_t20_run_all.m` (set `SINTEF_DATA`) | available from the authors on request |
 | Cross-country illustration | `r2_t73_crosscountry_final.m` | synthetic |
 | Figure data files of Fig. 8 and Fig. 9 | `r2_fig_t94_datos.py` | outputs of the scripts above |
@@ -69,8 +69,21 @@ reproduce_sweep_events('<folder with the EMT cases>')
 
 On MATLAB R2024a (macOS, Intel) the outcome, the declared class and the latency of the 170 events are identical to those of `reference_results/S2_final.csv`, which were obtained on MATLAB R2024b (Windows). The largest latency difference is 4e-13 ms.
 
+## Laboratory records
+
+The 39 laboratory records (about 2 GB) are archived at Zenodo: https://doi.org/10.5281/zenodo.24424837
+
+Unzip the two archives into `revision_r2/data/lab/`, so that it holds the folders `Fault_emulator_Outkontaktor` and `Fault_emulator_Autokontaktor`. Then
+
+```matlab
+addpath('revision_r2/experiments')
+r2_final_run_all('bloques', {'lab'})
+```
+
+regenerates the laboratory results per record, with the converter-terminal voltages and with the voltages of the grid-side measurement box.
+
 ## Not included
 
-- Laboratory records (about 2 GB), the 294 EMT cases (about 1.1 GB), the SINTEF data set and the Simulink model. They are available from the authors on reasonable request.
+- The 294 EMT cases (about 1.1 GB), the SINTEF data set and the Simulink model. They are available from the authors on reasonable request.
 - The scripts of the campaign that selected the zero-sequence gate, whose grid of 6528 events is the one of Table S7 of the supplementary document.
 - The scripts that write LaTeX fragments for the manuscript. The blocks `macros` and `cifras` of `r2_final_run_all` depend on them and are not in its default list; the `tex` step of `r2_final_emt` prints a warning and continues.

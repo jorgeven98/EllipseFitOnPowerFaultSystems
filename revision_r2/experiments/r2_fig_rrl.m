@@ -22,6 +22,7 @@ DAT = fullfile(RAIZ, 'data', 'simulation_curated');
 OUTD = fullfile(RAIZ, 'paper', 'data');
 LOGD = fullfile(RAIZ, '_revision_TPWRD', 'ronda2', 'resultados', 'T94');
 if ~exist(LOGD, 'dir'), mkdir(LOGD); end
+if ~exist(OUTD, 'dir'), mkdir(OUTD); end
 logf = fullfile(LOGD, 'r2_fig_rrl_log.txt'); if exist(logf, 'file'), delete(logf); end
 diary(logf); c0 = onCleanup(@() diary('off'));
 fprintf('R2_FIG_RRL  %s  MATLAB %s\n', datestr(now, 31), version); %#ok<TNOW1,DATST>

@@ -10,7 +10,7 @@
 % para A, B y D; generación analítica en forma cerrada para C.
 % Salidas: _revision_TPWRD/robustness/*.csv + resumen en consola.
 %
-% Autor: Jorge (con Claude) - Revisión TPWRD, jul-2026
+% Autor: Jorge - Revisión TPWRD, jul-2026
 
 clear; clc;
 addpath(fullfile('..', 'classifiers'));

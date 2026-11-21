@@ -7,11 +7,14 @@ MATLAB implementation of the methods presented in:
 > *arXiv:2509.10044 [eess.SY]*, 2025.
 > https://arxiv.org/abs/2509.10044
 
+A revised version of the paper is under review at *IEEE Transactions on Power Delivery*. The scripts of that
+revision and its supplementary document are in [`revision_r2/`](revision_r2/README.md).
+
 ## Overview
 
 This repository contains three voltage-based fault classification methods for three-phase power systems with high penetration of inverter-based resources (IBR). The approach addresses the failure of traditional distance protection under asymmetric conditions by exploiting the geometry of the voltage polarization ellipse.
 
-Each period of a three-phase voltage waveform traces an ellipse in 3D space. The shape, size, and orientation of this ellipse encode information about the type of fault, enabling detection within a **quarter-cycle** without relying on Clarke transform assumptions.
+Each period of a three-phase voltage waveform traces an ellipse in 3D space. The shape, size, and orientation of this ellipse encode the type of fault, and they are read from **quarter-cycle** windows of the three phase-to-ground voltages.
 
 **Methods implemented:**
 
@@ -20,6 +23,23 @@ Each period of a three-phase voltage waveform traces an ellipse in 3D space. The
 3. **PE3D**: Characterizes the 3D polarization ellipse via Stokes parameters (following Alam et al., 2020).
 
 All three methods share coherent thresholds for direct comparison.
+
+## Where to start
+
+| To | Go to |
+|---|---|
+| check that the code runs on your installation | `smoke_test.m` |
+| classify a voltage window with any of the three methods | `classifiers/` |
+| use the decision chain evaluated in the revised paper (zero-sequence gate, adaptive roundness gate, persistence of 10 windows) | `revision_r2/experiments/r2_decision_chain.m` with `r2_final_opts.m` |
+| regenerate a table or a figure of the revised paper | the table of [`revision_r2/README.md`](revision_r2/README.md) |
+| read the complete tables of the test campaigns | [`revision_r2/supplementary.pdf`](revision_r2/supplementary.pdf) |
+| check the reported results on another computer | `revision_r2/reproduce_sweep_events.m` |
+| reproduce the accuracy table of the first version | `experiments/compare_classifier_accuracy.m` |
+
+The repository has two parts. The folders at the root hold the code of the first version of the paper and of
+its first revision. `revision_r2/` is a self-contained copy of the project of the second revision. It has its
+own `src/` folder with the same classifiers (`ga_fault_classifier_pure.m` is identical in both places), so
+that its scripts run with their original relative paths.
 
 ## Supported Fault Types
 
@@ -81,6 +101,8 @@ utils/             - Shared utility functions (metrics, plotting, export)
 tests/             - Validation and threshold coherence verification scripts
 gui/               - Interactive MATLAB GUI for real-time analysis
 data/              - Simulation data (.mat files) for all 11 fault types
+revision_r2/       - Second revision: decision chain, scripts per table and figure, supplementary document
+smoke_test.m       - Quick check that the repository runs as cloned
 ```
 
 ### Classifiers (`classifiers/`)
@@ -130,7 +152,7 @@ One `.mat` file per fault type (`I_A-B.mat`, `I_A-G.mat`, ...), each with a 100-
 
 > **Note:** Laboratory hardware measurement files (~2 GB) are not included in this repository. Contact the authors for access.
 
-## Quick Start
+## Usage examples
 
 ### Run the main comparison experiment
 

@@ -320,6 +320,9 @@ for k = 1:numel(files)
     totw = totw + p.summary.n_win; totf = totf + nnz(p.win.fire); totfa = totfa + pa.summary.n_decl;
     detL(end+1, :) = {fn, expected, t_incep, a.event.first_label_ms, a.event.correct_decl_ms, a.event.outcome, a.event.decl_class, a.event.decl_ms, b.event.outcome, b.event.decl_class, b.event.decl_ms, b.event.n_decl_pre, p.summary.n_win, nnz(p.win.fire), pa.summary.n_decl}; %#ok<SAGROW>
 end
+if isempty(detL)
+    fprintf('AVISO: no hay registros de laboratorio en %s; se omite el bloque de laboratorio.\n', labdir);
+else
 TL = cell2table(detL, 'VariableNames', {'registro','truth','t_incep_s','primera_ms','asegurada_correcta_ms','singate_resultado','singate_clase','singate_decl_ms','cadena_resultado','cadena_clase','cadena_decl_ms','cadena_decl_pre','prefalta_ventanas','prefalta_ventanas_aseguradas','prefalta_cadena_n_decl'});
 writetable(TL, fullfile(OUT, 'mapa_detalle_laboratorio.csv')); disp(TL);
 l1 = TL.primera_ms; lM = TL.asegurada_correcta_ms;
@@ -331,6 +334,7 @@ MAP(end+1, :) = {'Laboratorio: registros declarados con la clase correcta', '161
     sprintf('%d/%d (sin puerta, primera declaracion); %d/%d (cadena completa)', nnz(strcmp(TL.singate_resultado, 'correcta')), height(TL), nnz(strcmp(TL.cadena_resultado, 'correcta')), height(TL)), 'pure', si(nnz(strcmp(TL.singate_resultado, 'correcta')) == 12), 'El script original solo busca la racha de la clase esperada; la cadena mira la primera declaracion de cualquier clase'};
 MAP(end+1, :) = {'Laboratorio: falsas declaraciones en ventanas sanas de prefalta', '1614', '0 de 8691', 'lab_prefault_security.m (solo consola)', '10', G, 'no aplica', '', ...
     sprintf('%d ventanas aseguradas de %d; cadena completa: %d declaraciones en prefalta', totf, totw, totfa), 'pure', si(totf == 0 && totw == 8691), ''};
+end
 
 %% ---- escribir el mapa
 TM = cell2table(MAP, 'VariableNames', {'cifra','linea_main_final','valor_publicado','script_origen','M_origen','clasificador_origen','convencion_temporal_origen','csv_guardado','valor_recalculado','protocolo_recalculo','coincide','nota'});
